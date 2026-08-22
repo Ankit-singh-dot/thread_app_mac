@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import path from "path";
 import { isDev } from "./utils.js";
+import { pollResources } from "./resourceManager.js";
 type test = string;
 app.on("ready", () => {
   const mainWindow = new BrowserWindow({});
@@ -12,4 +13,5 @@ app.on("ready", () => {
     console.log("App path:", app.getAppPath());
     console.log("Loading:", indexPath);
   }
+  pollResources();
 });
