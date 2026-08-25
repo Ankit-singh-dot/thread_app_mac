@@ -1,14 +1,19 @@
 import osUtils from "os-utils";
 import fs from "fs";
 import { cpuUsage } from "process";
+import { BrowserWindow } from "electron";
 const poling_interval = 500;
-export function pollResources() {
+export function pollResources(mainWindow: BrowserWindow) {
   setInterval(async () => {
     const cpuUsage = await getCpuUsage();
     const ramUsage = await getRamUsage();
     const storageUsage = getStorageData();
-    console.log({ cpuUsage, ramUsage, storageUsage: storageUsage.usage });
-  }, poling_interval);
+    mainWindow.webContents.send("statistics", {
+      cpuUsage,
+      ramUsage,
+      storageUsage: storageUsage.usage,
+    });
+     }, poling_interval);
 }
 function getCpuUsage() {
   return new Promise((resolve) => {
