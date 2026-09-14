@@ -3,7 +3,7 @@
     "strict": true,
     "target": "es2025",
     "module": "esnext",
-    "outDir": "../..//dist-electron",
+    "outDir": "../../dist-electron",
     "skipLibCheck": true,
 
   }

@@ -1,5 +1,6 @@
 import osUtils from "os-utils";
 import fs from "fs";
+import os from "os";
 import { cpuUsage } from "process";
 import { BrowserWindow } from "electron";
 const poling_interval = 500;
@@ -13,7 +14,18 @@ export function pollResources(mainWindow: BrowserWindow) {
       ramUsage,
       storageUsage: storageUsage.usage,
     });
-     }, poling_interval);
+  }, poling_interval);
+}
+
+export function getStaticData() {
+  const totalStorage = getStorageData().total;
+  const cpuModel = os.cpus()[0].model;
+  const totalMemory = Math.floor(osUtils.totalmem() / 1024);
+  return {
+    totalStorage,
+    cpuModel,
+    totalMemory,
+  };
 }
 function getCpuUsage() {
   return new Promise((resolve) => {

@@ -1,8 +1,9 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { isDev } from "./utils.js";
 import { pollResources } from "./resourceManager.js";
 import { getPreloadPath } from "./pathResolver.js";
+import { getStaticData } from "./resourceManager.js";
 type test = string;
 app.on("ready", () => {
   const mainWindow = new BrowserWindow({
@@ -20,4 +21,7 @@ app.on("ready", () => {
     console.log("Loading:", indexPath);
   }
   pollResources(mainWindow);
+  ipcMain.handle("getStaticsData", () => {
+    return getStaticData();
+  });
 });

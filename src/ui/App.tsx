@@ -8,13 +8,22 @@ function App() {
   const [count, setCount] = useState(0);
   useEffect(() => {
     // @ts-ignore
-    window.electron.subscribeStatics((stats) => console.log(stats));
+    window.electron?.subscribeStatics?.((stats) => console.log(stats));
   }, []);
+
+  useEffect(() => {
+    async function fetchSpecs() {
+      // @ts-ignore
+      const specs = await window.electron?.getStaticsData();
+      console.log("My pc spec", specs);
+    }
+    fetchSpecs();
+  },[]);
   return (
     <>
       <section id="center">
         <div className="hero">
-          <h1>hellofwefwefo </h1>
+          <h1>hello there </h1>
           <img src={heroImg} className="base" width="170" height="179" alt="" />
           <img src={reactLogo} className="framework" alt="React logo" />
           <img src={viteLogo} className="vite" alt="Vite logo" />
