@@ -3,13 +3,14 @@ import fs from "fs";
 import os from "os";
 import { cpuUsage } from "process";
 import { BrowserWindow } from "electron";
+import { ipcWebContentsSend } from "./utils";
 const poling_interval = 500;
 export function pollResources(mainWindow: BrowserWindow) {
   setInterval(async () => {
     const cpuUsage = await getCpuUsage();
     const ramUsage = await getRamUsage();
     const storageUsage = getStorageData();
-    mainWindow.webContents.send("statistics", {
+    ipcWebContentsSend("statistics", mainWindow.webContents , {
       cpuUsage,
       ramUsage,
       storageUsage: storageUsage.usage,
@@ -27,12 +28,12 @@ export function getStaticData() {
     totalMemory,
   };
 }
-function getCpuUsage() {
+function getCpuUsage(): Promise<number> {
   return new Promise((resolve) => {
     osUtils.cpuUsage(resolve);
   });
 }
-function getRamUsage() {
+function getRamUsage(): Promise<number> {
   return new Promise((resolve) => {
     resolve(1 - osUtils.freememPercentage());
   });

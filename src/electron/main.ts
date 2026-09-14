@@ -22,7 +22,7 @@ app.on("ready", () => {
   }
   pollResources(mainWindow);
 
-  ipcHandle("getStaticsData", () => {
+  ipcHandle("getStaticData", () => {
     return getStaticData();
   });
 });
