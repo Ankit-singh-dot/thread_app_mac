@@ -7,13 +7,11 @@ import "./App.css";
 function App() {
   const [count, setCount] = useState(0);
   useEffect(() => {
-    // @ts-ignore
     window.electron?.subscribeStatics?.((stats) => console.log(stats));
   }, []);
 
   useEffect(() => {
     async function fetchSpecs() {
-      // @ts-ignore
       const specs = await window.electron?.getStaticsData();
       console.log("My pc spec", specs);
     }

@@ -5,6 +5,6 @@
     "module": "esnext",
     "outDir": "../../dist-electron",
     "skipLibCheck": true,
-
-  }
+  },
+  "include":["./**/*", "../type.d.ts"]
 }
