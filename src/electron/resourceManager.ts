@@ -3,14 +3,14 @@ import fs from "fs";
 import os from "os";
 import { cpuUsage } from "process";
 import { BrowserWindow } from "electron";
-import { ipcWebContentsSend } from "./utils";
+import { ipcWebContentsSend } from "./utils.js";
 const poling_interval = 500;
 export function pollResources(mainWindow: BrowserWindow) {
   setInterval(async () => {
     const cpuUsage = await getCpuUsage();
     const ramUsage = await getRamUsage();
     const storageUsage = getStorageData();
-    ipcWebContentsSend("statistics", mainWindow.webContents , {
+    ipcWebContentsSend("statistics", mainWindow.webContents, {
       cpuUsage,
       ramUsage,
       storageUsage: storageUsage.usage,
