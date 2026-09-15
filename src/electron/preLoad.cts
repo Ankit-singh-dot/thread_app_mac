@@ -15,9 +15,11 @@ function ipcOn<Key extends keyof EventPayloadMapping>(
 }
 electron.contextBridge.exposeInMainWorld("electron", {
   subscribeStatics: (callback) => {
-    ipcOn("statistics", (stats) => {
-      callback(stats);
-    });
+    const listener = (_events: any, stats: any) => callback(stats);
+    electron.ipcRenderer.on("statistics", listener);
+    return () => {
+      electron.ipcRenderer.off("statistics", listener);
+    };
   },
   getStaticsData: () => ipcRendererInvoke("getStaticData"),
 } satisfies Window["electron"]);

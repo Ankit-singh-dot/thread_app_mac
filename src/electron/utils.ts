@@ -29,6 +29,7 @@ export function getUIpath() {
 }
 
 export function validateEventFrame(frame: WebFrameMain | null) {
+  console.log(frame?.url);
   if (!frame) {
     throw new Error("Malicious event: sender frame does not exist");
   }
