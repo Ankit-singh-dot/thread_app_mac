@@ -50,7 +50,6 @@ function App() {
       <div style={{ height: 120 }}>
         <Chart data={activeSwitch} maxPointData={10} />
       </div>
-      <div className="naming"> hello</div>
     </div>
   );
 }
