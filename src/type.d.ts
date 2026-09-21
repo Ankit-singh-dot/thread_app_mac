@@ -10,9 +10,12 @@ type StaticData = {
   totalMemory: number;
 };
 
+type View = "CPU" | "RAM" | "STORAGE";
+
 type EventPayloadMapping = {
   statistics: Statistics;
   getStaticData: StaticData;
+  changeView: View;
 };
 
 interface Window {
@@ -20,6 +23,9 @@ interface Window {
     subscribeStatics: (
       callback: (Statistics: Statistics) => void
     ) => unsubscribe;
+    getStaticsData: () => Promise<StaticData>;
+
+    subscribeChangeView: (callback: (view: View) => void) => unsubscribe;
     getStaticsData: () => Promise<StaticData>;
   };
 }
