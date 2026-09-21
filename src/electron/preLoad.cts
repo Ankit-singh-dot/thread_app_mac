@@ -21,5 +21,10 @@ electron.contextBridge.exposeInMainWorld("electron", {
       electron.ipcRenderer.off("statistics", listener);
     };
   },
+  subscribeChangeView(callback) {
+    ipcOn("changeView", (stats) => {
+      callback(stats);
+    });
+  },
   getStaticsData: () => ipcRendererInvoke("getStaticData"),
 } satisfies Window["electron"]);
