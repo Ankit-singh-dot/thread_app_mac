@@ -40,3 +40,7 @@ export function validateEventFrame(frame: WebFrameMain | null) {
     throw new Error("Malicious event");
   }
 }
+
+export function getAssetPath() {
+  return path.join(app.getAppPath(), isDev() ? "." : "..", "/src/ui/assets");
+}
