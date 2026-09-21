@@ -1,9 +1,11 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, Tray } from "electron";
 import path from "path";
-import { getUIpath, ipcHandle, isDev } from "./utils.js";
+import { getAssetPath, getUIpath, ipcHandle, isDev } from "./utils.js";
 import { pollResources } from "./resourceManager.js";
 import { getPreloadPath } from "./pathResolver.js";
 import { getStaticData } from "./resourceManager.js";
+import { createTray } from "./tray.js";
+import { createMenu } from "./menu.js";
 type test = string;
 app.on("ready", () => {
   const mainWindow = new BrowserWindow({
@@ -25,4 +27,29 @@ app.on("ready", () => {
   ipcHandle("getStaticData", () => {
     return getStaticData();
   });
+
+  createTray(mainWindow);
+  handleCloseEvents(mainWindow);
+  createMenu(mainWindow);
 });
+
+function handleCloseEvents(mainWindow: BrowserWindow) {
+  let willCose = false;
+  mainWindow.on("close", (e) => {
+    if (willCose) {
+      return;
+    }
+    e.preventDefault();
+    mainWindow.hide();
+    if (app.dock) {
+      app.dock.hide();
+    }
+  });
+
+  app.on("before-quit", () => {
+    willCose = true; //
+  });
+  mainWindow.on("show", () => {
+    willCose = false;
+  });
+}
